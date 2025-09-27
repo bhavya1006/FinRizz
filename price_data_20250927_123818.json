@@ -1,0 +1,122 @@
+{
+  "BTC/USD": [
+    {
+      "timestamp": "2025-09-27T12:38:18.683309",
+      "price": 40000,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T12:28:18.683309",
+      "price": 40100,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T12:18:18.683309",
+      "price": 40200,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T12:08:18.683309",
+      "price": 40300,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T11:58:18.683309",
+      "price": 40400,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T11:48:18.683309",
+      "price": 40500,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T11:38:18.683309",
+      "price": 40600,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T11:28:18.683309",
+      "price": 40700,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T11:18:18.683309",
+      "price": 40800,
+      "confidence": 50
+    },
+    {
+      "timestamp": "2025-09-27T11:08:18.683309",
+      "price": 40900,
+      "confidence": 50
+    }
+  ],
+  "ETH/USD": [
+    {
+      "timestamp": "2025-09-27T12:38:18.683309",
+      "price": 2500,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T12:28:18.683309",
+      "price": 2510,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T12:18:18.683309",
+      "price": 2520,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T12:08:18.683309",
+      "price": 2530,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T11:58:18.683309",
+      "price": 2540,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T11:48:18.683309",
+      "price": 2550,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T11:38:18.683309",
+      "price": 2560,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T11:28:18.683309",
+      "price": 2570,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T11:18:18.683309",
+      "price": 2580,
+      "confidence": 5
+    },
+    {
+      "timestamp": "2025-09-27T11:08:18.683309",
+      "price": 2590,
+      "confidence": 5
+    }
+  ],
+  "_alerts": [
+    {
+      "symbol": "BTC/USD",
+      "target_price": 45000,
+      "condition": "above",
+      "created_at": "2025-09-27T12:38:18.683279",
+      "triggered": false
+    },
+    {
+      "symbol": "ETH/USD",
+      "target_price": 2000,
+      "condition": "below",
+      "created_at": "2025-09-27T12:38:18.683296",
+      "triggered": false
+    }
+  ]
+}
