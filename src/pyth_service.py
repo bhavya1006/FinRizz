@@ -150,12 +150,12 @@ class PythPriceService:
                     
         return None
 
-    def _parse_price_data(self, raw_data: Dict, symbols: Union[str, List[str]]) -> Dict[str, Any]:
+    def _parse_price_data(self, raw_data: List, symbols: Union[str, List[str]]) -> Dict[str, Any]:
         """
         Parse raw API response into structured price data
         
         Args:
-            raw_data: Raw response from Pyth API
+            raw_data: Raw response from Pyth API (list of price data)
             symbols: Symbol(s) corresponding to the data
             
         Returns:
@@ -163,19 +163,29 @@ class PythPriceService:
         """
         parsed_data = {}
         
-        if not raw_data.get("parsed"):
-            logger.warning("No parsed data in API response")
+        if not raw_data or not isinstance(raw_data, list):
+            logger.warning("No data in API response")
             return parsed_data
             
         symbol_list = symbols if isinstance(symbols, list) else [symbols]
-        feed_id_to_symbol = {PRICE_FEEDS[sym]: sym for sym in symbol_list if sym in PRICE_FEEDS}
         
-        for item in raw_data["parsed"]:
+        for item in raw_data:
             feed_id = item.get("id")
-            if feed_id not in feed_id_to_symbol:
+            if not feed_id:
+                continue
+            
+            # Find matching symbol (API returns IDs without 0x prefix)
+            matching_symbol = None
+            for symbol in symbol_list:
+                if symbol in PRICE_FEEDS:
+                    config_feed_id = PRICE_FEEDS[symbol].replace('0x', '')
+                    if config_feed_id.lower() == feed_id.lower():
+                        matching_symbol = symbol
+                        break
+            
+            if not matching_symbol:
                 continue
                 
-            symbol = feed_id_to_symbol[feed_id]
             price_data = item.get("price", {})
             
             if not price_data:
@@ -185,8 +195,8 @@ class PythPriceService:
             price = float(price_data.get("price", 0)) * (10 ** price_data.get("expo", 0))
             confidence = float(price_data.get("conf", 0)) * (10 ** price_data.get("expo", 0))
             
-            parsed_data[symbol] = {
-                "symbol": symbol,
+            parsed_data[matching_symbol] = {
+                "symbol": matching_symbol,
                 "price": price,
                 "confidence_interval": confidence,
                 "timestamp": datetime.fromtimestamp(price_data.get("publish_time", 0)).isoformat(),
@@ -196,7 +206,7 @@ class PythPriceService:
                 "publish_time": price_data.get("publish_time")
             }
             
-        return parsed_data if isinstance(symbols, list) else parsed_data.get(symbols)
+        return parsed_data if isinstance(symbols, list) else parsed_data.get(symbols, None)
 
     # Async methods for better performance
     async def get_latest_price_async(self, symbol: str) -> Optional[Dict[str, Any]]:
@@ -241,11 +251,9 @@ class PythPriceService:
         """Async version of _fetch_price_data"""
         url = f"{self.base_url}{self.endpoints['latest_price_feeds']}"
         
-        params = {
-            "ids[]": feed_ids,
-            "verbose": "true",
-            "binary": "false"
-        }
+        # Build parameters for multiple IDs
+        params = [("ids[]", feed_id) for feed_id in feed_ids]
+        params.extend([("verbose", "true"), ("binary", "false")])
         
         async with self.throttler:
             for attempt in range(REQUEST_CONFIG["max_retries"]):
