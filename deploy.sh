@@ -30,7 +30,7 @@ case $PLATFORM in
         echo "Installing Netlify CLI..."
         npm install -g netlify-cli
     fi
-    netlify deploy --prod --dir .
+    netlify deploy --prod --dir src
     ;;
     
   "firebase")
@@ -54,7 +54,7 @@ case $PLATFORM in
   "local")
     echo "🏠 Starting local server..."
     echo "🌐 Opening http://localhost:3000"
-    python3 -m http.server 3000
+    cd src && python3 -m http.server 3000
     ;;
     
   *)
