@@ -13,7 +13,6 @@ echo "🚀 Deploying FinRizz Landing Page to: $PLATFORM"
 
 # Prepare build
 echo "📦 Preparing build..."
-cp finrizz_landing_page.html index.html
 
 case $PLATFORM in
   "vercel")
