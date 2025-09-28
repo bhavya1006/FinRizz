@@ -1,0 +1,31 @@
+# 0G-Integrated Pyth Oracle Requirements
+# Core requirements for Pyth + 0G Network integration
+
+# Core HTTP and data handling
+requests>=2.28.0
+
+# Environment variables (recommended)
+python-dotenv>=1.0.0
+
+# Blockchain interaction (Web3.py for 0G EVM compatibility)
+web3>=6.0.0
+eth-account>=0.8.0
+
+# Data serialization for 0G Storage/DA
+pydantic>=2.0.0
+
+# Optional: Enhanced HTTP for 0G API interactions
+httpx>=0.24.0
+
+# Optional: For 0G Storage integration
+aiofiles>=23.0.0
+
+# Optional: Web API server (if needed)
+flask>=2.2.0
+flask-cors>=4.0.0
+
+# Development and testing
+pytest>=7.0.0
+
+# 0G-specific (when available)
+# 0g-sdk>=1.0.0  # Uncomment when 0G releases official Python SDK

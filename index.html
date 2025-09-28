@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinRizz - AI-Powered Crypto Intelligence Platform</title>
+    <meta name="description" content="Revolutionary multi-agent AI system democratizing institutional-grade crypto market intelligence with real-time data, whale tracking, and game theory analysis">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #0f0f23;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #ffd89b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero-content .subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 16px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .ai-dashboard {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .dashboard-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4ade80;
+            font-size: 14px;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .agent-list {
+            list-style: none;
+        }
+
+        .agent-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .agent-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .discovery-agent { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .whale-agent { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .market-agent { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .analysis-agent { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        .agent-info h4 {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .agent-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .agent-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 64px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .discovery-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .whale-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .market-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .analysis-icon { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Architecture Section */
+        .architecture {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .arch-content h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .arch-content p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-item i {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .tech-item span {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .code-preview {
+            background: #0d1117;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Fira Code', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-title {
+            color: #58a6ff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .code-lang {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .code-content {
+            color: #c9d1d9;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .code-keyword { color: #ff7b72; }
+        .code-string { color: #a5d6ff; }
+        .code-comment { color: #8b949e; }
+        .code-function { color: #d2a8ff; }
+
+        /* Demo Section */
+        .demo {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #16213e 0%, #0f0f23 100%);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .demo-content h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .demo-content p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .demo-commands {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .demo-commands li {
+            padding: 12px 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-commands code {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .analysis-report {
+            background: #0d1117;
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analysis-report::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .report-title {
+            color: #58a6ff;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .confidence-badge {
+            padding: 6px 12px;
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .report-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-item {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .bullish { color: #4ade80; }
+        .bearish { color: #ef4444; }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 120px 0;
+            background: #0f0f23;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid #667eea;
+            transform: scale(1.05);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .plan-period {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features i {
+            color: #4ade80;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a1a;
+            padding: 80px 0 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #667eea;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 32px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-grid, .arch-grid, .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .features-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .gradient-animate {
+            background-size: 200% 200%;
+            animation: gradient 4s ease infinite;
+        }
+
+        /* Loading states */
+        .loading {
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">FinRizz</a>
+            <ul class="nav-links">
+                <li><a href="#features">AI Agents</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>FinRizz AI</h1>
+                    <p class="subtitle">Multi-Agent Crypto Intelligence Platform</p>
+                    <p>Democratizing institutional-grade market analysis with AI agents, real-time data, and game theory modeling. Get the same analytical capabilities traditionally reserved for hedge funds.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">4</span>
+                            <span class="stat-label">AI Agents</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">400+</span>
+                            <span class="stat-label">Price Feeds</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">&lt;60s</span>
+                            <span class="stat-label">Analysis Time</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="https://t.me/your_finrizz_bot" class="btn btn-primary">
+                            <i class="fab fa-telegram"></i> Start Analysis
+                        </a>
+                        <a href="#demo" class="btn btn-secondary">
+                            <i class="fas fa-play"></i> View Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="ai-dashboard floating">
+                        <div class="dashboard-header">
+                            <h3 class="dashboard-title">AI Agents Status</h3>
+                            <div class="status-indicator">
+                                <div class="pulse"></div>
+                                <span>All Systems Active</span>
+                            </div>
+                        </div>
+                        
+                        <ul class="agent-list">
+                            <li class="agent-item">
+                                <div class="agent-icon discovery-agent">
+                                    <i class="fas fa-search-dollar"></i>
+                                </div>
+                                <div class="agent-info">
+                                    <h4>Token Discovery</h4>
+                                    <p>Scanning funding platforms...</p>
+                                </div>
+                                <span class="agent-status">ACTIVE</span>
+                            </li>
+                            <li class="agent-item">
+                                <div class="agent-icon whale-agent">
+                                    <i class="fas fa-water"></i>
+                                </div>
+                                <div class="agent-info">
+                                    <h4>Whale Tracking</h4>
+                                    <p>Monitoring 100 top holders...</p>
+                                </div>
+                                <span class="agent-status">ACTIVE</span>
+                            </li>
+                            <li class="agent-item">
+                                <div class="agent-icon market-agent">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                                <div class="agent-info">
+                                    <h4>Market Data</h4>
+                                    <p>Processing Pyth feeds...</p>
+                                </div>
+                                <span class="agent-status">ACTIVE</span>
+                            </li>
+                            <li class="agent-item">
+                                <div class="agent-icon analysis-agent">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="agent-info">
+                                    <h4>Game Theory</h4>
+                                    <p>Analyzing whale dynamics...</p>
+                                </div>
+                                <span class="agent-status">ACTIVE</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Four Specialized AI Agents Working In Concert</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon discovery-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h3>Token Discovery Agent</h3>
+                    <p>Crawls funding platforms using Firecrawl, extracts tokenomics and vesting schedules, analyzes Twitter sentiment with bot detection, and identifies early-stage opportunities before mainstream discovery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon whale-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>Whale Tracking Agent</h3>
+                    <p>Monitors top 100 holder wallets in real-time, tracks large transfers and accumulation patterns, calculates concentration risk, and provides early warning alerts for major market movements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon market-icon">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <h3>Market Data Agent</h3>
+                    <p>Fetches live prices via Pyth Network, calculates real-time market caps, performs technical analysis (RSI, MACD), and assesses liquidity depth and trading volume patterns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon analysis-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Financial Analysis Agent</h3>
+                    <p>Applies game theory to model whale vs. retail dynamics, generates DCF-based valuations, performs scenario analysis, and delivers institutional-grade investment recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <div class="arch-grid">
+                <div class="arch-content">
+                    <h2>Powered by Cutting-Edge Infrastructure</h2>
+                    <p>FinRizz leverages the most advanced blockchain infrastructure to deliver institutional-grade analysis with retail accessibility. Our multi-chain approach ensures comprehensive market coverage.</p>
+                    
+                    <div class="tech-stack">
+                        <div class="tech-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Pyth Network Oracles</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>The Graph Substreams</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-rocket"></i>
+                            <span>0G Network Integration</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-telegram"></i>
+                            <span>Telegram Bot API</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-fire"></i>
+                            <span>Firecrawl Web Scraping</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-brain"></i>
+                            <span>Game Theory Models</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-preview">
+                    <div class="code-header">
+                        <span class="code-title">Multi-Agent Analysis Pipeline</span>
+                        <span class="code-lang">Python</span>
+                    </div>
+                    <div class="code-content">
+<span class="code-comment"># FinRizz Multi-Agent Analysis System</span>
+<span class="code-keyword">async def</span> <span class="code-function">comprehensive_analysis</span>(token_address):
+    <span class="code-comment"># Initialize all four agents</span>
+    discovery_agent = <span class="code-function">TokenDiscoveryAgent</span>()
+    whale_agent = <span class="code-function">WhaleTrackingAgent</span>()
+    market_agent = <span class="code-function">MarketDataAgent</span>()
+    analysis_agent = <span class="code-function">GameTheoryAgent</span>()
+    
+    <span class="code-comment"># Run agents in parallel</span>
+    results = <span class="code-keyword">await</span> <span class="code-function">asyncio.gather</span>(
+        discovery_agent.<span class="code-function">discover_token</span>(token_address),
+        whale_agent.<span class="code-function">track_whales</span>(token_address),
+        market_agent.<span class="code-function">fetch_market_data</span>(token_address),
+        analysis_agent.<span class="code-function">analyze_dynamics</span>(token_address)
+    )
+    
+    <span class="code-comment"># Generate final recommendation</span>
+    recommendation = <span class="code-function">synthesize_analysis</span>(results)
+    <span class="code-keyword">return</span> recommendation
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo">
+        <div class="container">
+            <div class="demo-grid">
+                <div class="demo-content">
+                    <h2>See FinRizz In Action</h2>
+                    <p>Experience institutional-grade crypto intelligence through our intuitive Telegram bot. Get comprehensive analysis reports in under 60 seconds with actionable insights backed by game theory and real-time data.</p>
+                    
+                    <ul class="demo-commands">
+                        <li><code>/analyze 0x1234...abcd</code> - Comprehensive 4-agent analysis</li>
+                        <li><code>/discover</code> - Find newly funded utility tokens</li>
+                        <li><code>/whale_alert BTC</code> - Set whale movement notifications</li>
+                        <li><code>/portfolio</code> - AI-powered portfolio optimization</li>
+                    </ul>
+
+                    <div class="cta-buttons">
+                        <a href="https://t.me/your_finrizz_bot" class="btn btn-primary">
+                            <i class="fab fa-telegram"></i> Try Free Analysis
+                        </a>
+                    </div>
+                </div>
+
+                <div class="analysis-report">
+                    <div class="report-header">
+                        <h3 class="report-title">🔍 FinRizz Analysis: $EXAMPLE</h3>
+                        <span class="confidence-badge">Confidence: 87%</span>
+                    </div>
+
+                    <div class="report-metrics">
+                        <div class="metric-item">
+                            <div class="metric-label">Verdict</div>
+                            <div class="metric-value bullish">BUY 🟢</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Risk Score</div>
+                            <div class="metric-value">3/10 (Low)</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Price Target</div>
+                            <div class="metric-value bullish">$2.45 (+34%)</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Whale Risk</div>
+                            <div class="metric-value">LOW</div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 16px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <div class="metric-label" style="margin-bottom: 8px;">🎯 Investment Thesis</div>
+                        <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 14px;">Game theory analysis suggests favorable whale-retail dynamics with low manipulation risk. Strong fundamentals backed by institutional funding...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Intelligence Level</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan-name">Explorer</div>
+                    <div class="plan-price">Free</div>
+                    <div class="plan-period">Forever</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 5 basic analyses/month</li>
+                        <li><i class="fas fa-check"></i> Price alerts</li>
+                        <li><i class="fas fa-check"></i> Community access</li>
+                        <li><i class="fas fa-times"></i> Whale tracking</li>
+                        <li><i class="fas fa-times"></i> Game theory analysis</li>
+                        <li><i class="fas fa-times"></i> Portfolio optimization</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="plan-name">Professional</div>
+                    <div class="plan-price">25 0G</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Unlimited analyses</li>
+                        <li><i class="fas fa-check"></i> Real-time whale alerts</li>
+                        <li><i class="fas fa-check"></i> Game theory modeling</li>
+                        <li><i class="fas fa-check"></i> Portfolio optimization</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Advanced indicators</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Start Free Trial</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="plan-name">Institution</div>
+                    <div class="plan-price">500 0G</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Everything in Pro</li>
+                        <li><i class="fas fa-check"></i> API access</li>
+                        <li><i class="fas fa-check"></i> Custom models</li>
+                        <li><i class="fas fa-check"></i> White-label solution</li>
+                        <li><i class="fas fa-check"></i> Dedicated support</li>
+                        <li><i class="fas fa-check"></i> Revenue sharing</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FinRizz AI</h3>
+                    <p>Revolutionary multi-agent AI system democratizing institutional-grade crypto market intelligence. Built on cutting-edge blockchain infrastructure.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <a href="#features">AI Agents</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#demo">Live Demo</a>
+                    <a href="#pricing">Pricing</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Infrastructure</h3>
+                    <a href="https://pyth.network">Pyth Network</a>
+                    <a href="https://thegraph.com">The Graph Protocol</a>
+                    <a href="https://0g.ai">0G Network</a>
+                    <a href="https://telegram.org">Telegram Bot API</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <a href="https://t.me/your_finrizz_bot"><i class="fab fa-telegram"></i> Telegram Bot</a>
+                    <a href="https://github.com/Ankur2606/FinRizz"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://discord.gg/finrizz"><i class="fab fa-discord"></i> Discord</a>
+                    <a href="mailto:team@finrizz.ai"><i class="fas fa-envelope"></i> Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinRizz AI. Democratizing institutional-grade crypto intelligence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Real-time metrics simulation
+        function updateMetrics() {
+            const metrics = {
+                activeUsers: () => Math.floor(Math.random() * 500) + 2500,
+                analysisCount: () => Math.floor(Math.random() * 100) + 850,
+                whaleAlerts: () => Math.floor(Math.random() * 20) + 45,
+            };
+
+            // Update any dynamic metrics here
+            // This can be expanded when you have real-time data
+        }
+
+        // Agent status animation
+        function animateAgentStatus() {
+            const agents = document.querySelectorAll('.agent-item');
+            agents.forEach((agent, index) => {
+                const status = agent.querySelector('p');
+                const messages = [
+                    'Scanning funding platforms...',
+                    'Processing new tokens...',
+                    'Analyzing sentiment data...',
+                    'Updating risk scores...',
+                ];
+                
+                setInterval(() => {
+                    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                    status.textContent = randomMessage;
+                }, 3000 + (index * 500));
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize animations and updates
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observe all cards for scroll animations
+            document.querySelectorAll('.feature-card, .pricing-card, .metric-item').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Start agent status animation
+            animateAgentStatus();
+            
+            // Update metrics periodically
+            updateMetrics();
+            setInterval(updateMetrics, 10000); // Update every 10 seconds
+
+            // Add typing effect to code
+            const codeContent = document.querySelector('.code-content');
+            const originalText = codeContent.innerHTML;
+            codeContent.innerHTML = '';
+            
+            let i = 0;
+            function typeCode() {
+                if (i < originalText.length) {
+                    codeContent.innerHTML = originalText.slice(0, i + 1);
+                    i++;
+                    setTimeout(typeCode, 20);
+                }
+            }
+            
+            // Start typing animation when code section is visible
+            const codeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        typeCode();
+                        codeObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            codeObserver.observe(codeContent);
+        });
+
+        // Add hover effects for interactive elements
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.02)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

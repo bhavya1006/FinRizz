@@ -1,0 +1,27 @@
+{
+  "name": "finrizz-landing",
+  "version": "1.0.0",
+  "description": "FinRizz AI-Powered Crypto Intelligence Platform Landing Page",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "build": "cp finrizz_landing_page.html index.html",
+    "deploy:vercel": "npm run build && vercel --prod",
+    "deploy:netlify": "npm run build && netlify deploy --prod --dir .",
+    "preview": "npm run build && npm run dev"
+  },
+  "keywords": [
+    "finrizz",
+    "crypto",
+    "ai",
+    "blockchain",
+    "defi",
+    "trading"
+  ],
+  "author": "FinRizz Team",
+  "license": "MIT",
+  "devDependencies": {
+    "netlify-cli": "^17.0.0",
+    "vercel": "^32.0.0"
+  }
+}
