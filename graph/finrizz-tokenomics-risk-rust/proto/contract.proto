@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package contract.v1;
+message Events {
+    repeated Uni_Approval uni_approvals = 1;
+    repeated Uni_DelegateChanged uni_delegate_changeds = 2;
+    repeated Uni_DelegateVotesChanged uni_delegate_votes_changeds = 3;
+    repeated Uni_MinterChanged uni_minter_changeds = 4;
+    repeated Uni_Transfer uni_transfers = 5;
+}
+message Calls {
+    repeated Uni_ApproveCall uni_call_approves = 1;
+    repeated Uni_DelegateCall uni_call_delegates = 2;
+    repeated Uni_DelegateBySigCall uni_call_delegate_by_sigs = 3;
+    repeated Uni_MintCall uni_call_mints = 4;
+    repeated Uni_PermitCall uni_call_permits = 5;
+    repeated Uni_SetMinterCall uni_call_set_minters = 6;
+    repeated Uni_TransferCall uni_call_transfers = 7;
+    repeated Uni_TransferFromCall uni_call_transfer_froms = 8;
+}
+message EventsCalls {
+    Events events = 1;
+    Calls calls = 2;
+}
+message Uni_Approval {
+    string evt_tx_hash = 1;
+    uint32 evt_index = 2;
+    google.protobuf.Timestamp evt_block_time = 3;
+    uint64 evt_block_number = 4;
+    bytes owner = 5;
+    bytes spender = 6;
+    string amount = 7;
+}
+message Uni_DelegateChanged {
+    string evt_tx_hash = 1;
+    uint32 evt_index = 2;
+    google.protobuf.Timestamp evt_block_time = 3;
+    uint64 evt_block_number = 4;
+    bytes delegator = 5;
+    bytes from_delegate = 6;
+    bytes to_delegate = 7;
+}
+message Uni_DelegateVotesChanged {
+    string evt_tx_hash = 1;
+    uint32 evt_index = 2;
+    google.protobuf.Timestamp evt_block_time = 3;
+    uint64 evt_block_number = 4;
+    bytes delegate = 5;
+    string previous_balance = 6;
+    string new_balance = 7;
+}
+message Uni_MinterChanged {
+    string evt_tx_hash = 1;
+    uint32 evt_index = 2;
+    google.protobuf.Timestamp evt_block_time = 3;
+    uint64 evt_block_number = 4;
+    bytes minter = 5;
+    bytes new_minter = 6;
+}
+message Uni_Transfer {
+    string evt_tx_hash = 1;
+    uint32 evt_index = 2;
+    google.protobuf.Timestamp evt_block_time = 3;
+    uint64 evt_block_number = 4;
+    bytes from = 5;
+    bytes to = 6;
+    string amount = 7;
+}
+  
+message Uni_ApproveCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes spender = 6;
+    string raw_amount = 7;
+    bool output_param0 = 8;
+}
+message Uni_DelegateCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes delegatee = 6;
+}
+message Uni_DelegateBySigCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes delegatee = 6;
+    string nonce = 7;
+    string expiry = 8;
+    uint64 v = 9;
+    bytes r = 10;
+    bytes s = 11;
+}
+message Uni_MintCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes dst = 6;
+    string raw_amount = 7;
+}
+message Uni_PermitCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes owner = 6;
+    bytes spender = 7;
+    string raw_amount = 8;
+    string deadline = 9;
+    uint64 v = 10;
+    bytes r = 11;
+    bytes s = 12;
+}
+message Uni_SetMinterCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes minter = 6;
+}
+message Uni_TransferCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes dst = 6;
+    string raw_amount = 7;
+    bool output_param0 = 8;
+}
+message Uni_TransferFromCall {
+    string call_tx_hash = 1;
+    google.protobuf.Timestamp call_block_time = 2;
+    uint64 call_block_number = 3;
+    uint64 call_ordinal = 4;
+    bool call_success = 5;
+    bytes src = 6;
+    bytes dst = 7;
+    string raw_amount = 8;
+    bool output_param0 = 9;
+}
