@@ -1,0 +1,113 @@
+# ----------------------------------------------------------------
+# Finrizz-Tokenomics-Risk Schema
+# Defines the data model for tracking whale activity, tokenomics, and liquidity risk
+# for the Finrizz AI Financial Advisor.
+# ----------------------------------------------------------------
+
+# Custom Scalars for handling large numbers and addresses
+scalar BigDecimal
+scalar BigInt
+scalar Bytes # Used for addresses (0x...)
+
+# ================================================================
+# 1. TOKEN ENTITY: Global Token Data (Market Cap & Supply)
+# ID: The Token Contract Address
+# ================================================================
+type Token @entity {
+  id: ID! # The Token Contract Address (e.g., 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984 for UNI)
+
+  # Core Token Data
+  name: String!
+  symbol: String!
+  decimals: Int!
+  
+  # Supply and Value Metrics
+  totalSupply: BigInt!
+  circulatingSupply: BigInt!
+  
+  # Price and Market Cap (Derived by Substreams)
+  currentPriceUSD: BigDecimal
+  marketCapUSD: BigDecimal 
+  
+  # Agent-Specific Risk Data
+  vestingCliffDate: BigInt # Timestamp of the next major unlock event
+  vestingDilutionPercent: BigDecimal # Dilution % for the next cliff
+  
+  # Relationships
+  wallets: [Wallet!] @derivedFrom(field: "token") # Links to all holders
+  primaryPool: LiquidityPool @derivedFrom(field: "token") # Links to the main LP Pool
+}
+
+# ================================================================
+# 2. WALLET ENTITY: Whale Holdings & Concentration Risk
+# ID: The Holder's Wallet Address
+# ================================================================
+type Wallet @entity {
+  id: ID! # The Holder's Wallet Address
+  
+  # Holding Data
+  token: Token! # Links back to the Token entity
+  balance: BigInt! # Current Token Balance
+  
+  # Calculated for Concentration Analysis
+  percentageOfSupply: BigDecimal! # Percentage of circulatingSupply held
+  
+  # Activity Tracking (Reverse lookups for transfers)
+  sentTransfers: [WhaleTransfer!] @derivedFrom(field: "fromWallet")
+  receivedTransfers: [WhaleTransfer!] @derivedFrom(field: "toWallet")
+}
+
+
+# ================================================================
+# 3. WHALE TRANSFER ENTITY: Whale Activity Log
+# ID: Transaction Hash + Log Index
+# ================================================================
+type WhaleTransfer @entity {
+  id: ID! 
+  
+  # Relationships
+  token: Token!
+  fromWallet: Wallet!
+  toWallet: Wallet!
+  
+  # Transaction Details (Only for transfers exceeding the Rust threshold)
+  amount: BigInt!
+  amountUSD: BigDecimal 
+  timestamp: BigInt!
+  txHash: Bytes!
+}
+
+# ================================================================
+# 4. LIQUIDITY & SAFETY ENTITIES (For CRITICAL SAFETY FAIL)
+# ================================================================
+
+# Tracks the primary pool for the token (e.g., the WETH/UNI pair)
+type LiquidityPool @entity {
+    id: ID! # Pool Contract Address (Primary Key)
+    
+    token: Token! # The token this pool tracks
+    
+    # Liquidity Metrics
+    lpTokenSupply: BigInt! # Total supply of LP tokens for this pair
+    totalLiquidityUSD: BigDecimal
+    
+    # Safety Status (Derived by Substreams from Lock events)
+    isLiquidityLocked: Boolean! # Overall Safety Status (TRUE/FALSE)
+    lockedPercentage: BigDecimal! # Percentage of total LP tokens that are locked
+    
+    # Relationships
+    locks: [LiquidityLock!] @derivedFrom(field: "pool")
+}
+
+# Tracks individual locks from a locker contract (e.g., UniCrypt, Pinksale)
+type LiquidityLock @entity {
+    id: ID! # Unique ID (Locker Transaction Hash + Lock ID)
+    
+    pool: LiquidityPool! # The pool tokens that are locked
+    
+    # Lock Details
+    lockerContract: Bytes! # The Locker Contract Address
+    amount: BigInt! # Amount of LP tokens locked
+    unlockTime: BigInt! # Timestamp when the tokens unlock
+    isStillLocked: Boolean! # True if unlockTime > current block time
+}

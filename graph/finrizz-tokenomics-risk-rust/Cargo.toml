@@ -1,0 +1,37 @@
+[package]
+name = "whale_risk_tracker"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+name = "substreams"
+crate-type = ["cdylib"]
+
+[dependencies]
+ethabi = "17"
+hex-literal = "0.3.4"
+num-bigint = "0.4"
+num-traits = "0.2.15"
+prost = "0.13.3"
+prost-types = "0.13.3"
+substreams = "0.6.0"
+substreams-ethereum = "0.10.2"
+substreams-entity-change = "1.0" # Required to sink data to the Subgraph
+num-bigint = { version = "0.4", features = ["serde"] } # For robust BigInt math
+num-traits = "0.2" # Used with num-bigint
+lazy_static = "1.4" # For the Whale Threshold constant
+
+# Required so that ethabi > ethereum-types build correctly under wasm32-unknown-unknown
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { version = "0.2", features = ["custom"] }
+
+[build-dependencies]
+anyhow = "1"
+substreams-ethereum = "0.10.0"
+regex = "1.8"
+
+[profile.release]
+lto = true
+opt-level = 's'
+strip = "debuginfo"
+

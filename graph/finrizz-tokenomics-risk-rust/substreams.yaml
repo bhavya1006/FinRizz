@@ -1,0 +1,103 @@
+specVersion: v0.1.0
+package:
+  name: whale_risk_tracker
+  version: v0.1.0
+
+imports:
+  ethcommon: https://spkg.io/streamingfast/ethereum-common-v0.3.0.spkg
+  uniswap_v3: https://spkg.io/streamingfast/uniswap-v3-v0.2.10.spkg
+
+protobuf:
+  files:
+    - contract.proto
+  importPaths:
+    - ./proto
+  excludePaths:
+    - sf/substreams
+    - google
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  # ------------------------------------
+  # 1. CORE EVENT AND CALL EXTRACTORS (UNI Token)
+  # ------------------------------------
+  - name: map_events
+    kind: map
+    initialBlock: 10861674
+    blockFilter:
+      module: ethcommon:index_events
+      query:
+        string: evt_addr:0x1f9840a85d5af5bf1d1762f925bdaddc4201f984
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.Events
+
+  - name: map_calls
+    kind: map
+    initialBlock: 10861674
+    blockFilter:
+      module: ethcommon:index_calls
+      query:
+        string: call_to:0x1f9840a85d5af5bf1d1762f925bdaddc4201f984
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.Calls
+
+  - name: map_events_calls
+    kind: map
+    initialBlock: 10861674
+    inputs:
+      - map: map_events
+      - map: map_calls
+    output:
+      type: proto:contract.v1.EventsCalls
+
+  # ------------------------------------
+  # 2. FACTORY & INITIALIZATION MODULES
+  # ------------------------------------
+
+  - name: map_token_initializer
+    kind: map
+    initialBlock: 10861674
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.TokenInit
+
+# ------------------------------------
+# 3. STATE STORE (Wallet Balances) - CORRECTED
+# ------------------------------------
+  - name: store_wallet_balances
+    kind: store
+    initialBlock: 10861674
+    inputs:
+      - map: map_events
+    valueType: bigint
+    updatePolicy: add
+
+  - name: graph_out
+    kind: map
+    initialBlock: 10861674
+    inputs:
+      - map: map_whale_transfers       # Filtered whale transfers/calls
+      - store: store_wallet_balances # Wallet balances (in get mode implicitly)
+      - map: uniswap_v3:map_pools     # Factory data
+      - map: map_token_initializer  # Initializer data
+    output:
+      type: proto:sf.substreams.entity.v1.EntityChanges
+
+    - name: map_whale_transfers   # <--- FIX: This is the missing declaration!
+    kind: map
+    initialBlock: 10861674
+    inputs:
+      - map: map_events         # This module takes ALL events (raw transfers) as input
+    output:
+      type: proto:contract.v1.UniTransfers
+
+network: mainnet
